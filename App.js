@@ -12,6 +12,30 @@ const apostas = [
 export default function App() {
   const [nos, setNos] = useState(0);
   const [eles, setEles] = useState(0);
+  const [vitoriosNos, setVitoriosNos] = useState(0);
+  const [vitoriosEles, setVitoriosEles] = useState(0);
+
+  function adicionarNos(pontos) {
+    const novo = nos + pontos;
+    if (novo >= 12) {
+      setVitoriosNos(vitoriosNos + 1);
+      setNos(0);
+      setEles(0);
+    } else {
+      setNos(novo);
+    }
+  }
+
+  function adicionarEles(pontos) {
+    const novo = eles + pontos;
+    if (novo >= 12) {
+      setVitoriosEles(vitoriosEles + 1);
+      setNos(0);
+      setEles(0);
+    } else {
+      setEles(novo);
+    }
+  }
 
   return (
     <View style={styles.container}>
@@ -21,17 +45,18 @@ export default function App() {
         <View style={styles.time}>
           <Text style={styles.timeNome}>Nós</Text>
           <Text style={styles.valor}>{nos}</Text>
+          <Text style={styles.vitorias}>Vitórias: {vitoriosNos}</Text>
           <View style={styles.linha}>
-            <TouchableOpacity style={[styles.botao, styles.botaoMenos]} onPress={() => setNos(nos - 1)}>
+            <TouchableOpacity style={[styles.botao, styles.botaoMenos]} onPress={() => setNos(Math.max(0, nos - 1))}>
               <Text style={styles.botaoTexto}>-</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={[styles.botao, styles.botaoMais]} onPress={() => setNos(nos + 1)}>
+            <TouchableOpacity style={[styles.botao, styles.botaoMais]} onPress={() => adicionarNos(1)}>
               <Text style={styles.botaoTexto}>+</Text>
             </TouchableOpacity>
           </View>
           <View style={styles.apostas}>
             {apostas.map((a) => (
-              <TouchableOpacity key={a.label} style={[styles.botaoAposta, { backgroundColor: a.cor }]} onPress={() => setNos(nos + a.pontos)}>
+              <TouchableOpacity key={a.label} style={[styles.botaoAposta, { backgroundColor: a.cor }]} onPress={() => adicionarNos(a.pontos)}>
                 <Text style={styles.botaoApostaTexto}>{a.label}</Text>
               </TouchableOpacity>
             ))}
@@ -43,17 +68,18 @@ export default function App() {
         <View style={styles.time}>
           <Text style={styles.timeNome}>Eles</Text>
           <Text style={styles.valor}>{eles}</Text>
+          <Text style={styles.vitorias}>Vitórias: {vitoriosEles}</Text>
           <View style={styles.linha}>
-            <TouchableOpacity style={[styles.botao, styles.botaoMenos]} onPress={() => setEles(eles - 1)}>
+            <TouchableOpacity style={[styles.botao, styles.botaoMenos]} onPress={() => setEles(Math.max(0, eles - 1))}>
               <Text style={styles.botaoTexto}>-</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={[styles.botao, styles.botaoMais]} onPress={() => setEles(eles + 1)}>
+            <TouchableOpacity style={[styles.botao, styles.botaoMais]} onPress={() => adicionarEles(1)}>
               <Text style={styles.botaoTexto}>+</Text>
             </TouchableOpacity>
           </View>
           <View style={styles.apostas}>
             {apostas.map((a) => (
-              <TouchableOpacity key={a.label} style={[styles.botaoAposta, { backgroundColor: a.cor }]} onPress={() => setEles(eles + a.pontos)}>
+              <TouchableOpacity key={a.label} style={[styles.botaoAposta, { backgroundColor: a.cor }]} onPress={() => adicionarEles(a.pontos)}>
                 <Text style={styles.botaoApostaTexto}>{a.label}</Text>
               </TouchableOpacity>
             ))}
@@ -93,6 +119,10 @@ const styles = StyleSheet.create({
   },
   valor: {
     fontSize: 64,
+  },
+  vitorias: {
+    fontSize: 16,
+    color: '#555',
   },
   divisor: {
     width: 2,
