@@ -87,6 +87,15 @@ export default function App() {
         </View>
       </View>
 
+      <View style={styles.botoes}>
+        <TouchableOpacity style={styles.botaoReiniciar} onPress={() => { setNos(0); setEles(0); }}>
+          <Text style={styles.botaoControleTexto}>Reiniciar</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.botaoNovoJogo} onPress={() => { setNos(0); setEles(0); setVitoriosNos(0); setVitoriosEles(0); }}>
+          <Text style={styles.botaoControleTexto}>Novo Jogo</Text>
+        </TouchableOpacity>
+      </View>
+
       <StatusBar style="auto" />
     </View>
   );
@@ -162,6 +171,28 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   botaoApostaTexto: {
+    color: '#fff',
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
+  botoes: {
+    flexDirection: 'row',
+    gap: 16,
+    marginTop: 30,
+  },
+  botaoReiniciar: {
+    backgroundColor: '#16a085',
+    paddingHorizontal: 24,
+    paddingVertical: 12,
+    borderRadius: 12,
+  },
+  botaoNovoJogo: {
+    backgroundColor: '#16a085',
+    paddingHorizontal: 24,
+    paddingVertical: 12,
+    borderRadius: 12,
+  },
+  botaoControleTexto: {
     color: '#fff',
     fontSize: 16,
     fontWeight: 'bold',
